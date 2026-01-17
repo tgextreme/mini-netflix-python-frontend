@@ -6,8 +6,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             // Intentar obtener información del usuario para validar el token
             await api.getMe();
-            // Si llega aquí, el token es válido, redirigir
-            window.location.href = 'home.html';
+            // Si llega aquí, el token es válido, redirigir según rol
+            const user = api.getUser();
+            const isAdmin = api.isAdmin();
+            console.log('[Auth] Usuario ya autenticado:', user);
+            console.log('[Auth] Es admin:', isAdmin);
+            
+            const redirectUrl = isAdmin ? '/admin/' : '/home.html';
+            console.log('[Auth] Redirigiendo a:', redirectUrl);
+            window.location.href = redirectUrl;
             return;
         } catch (error) {
             // Token inválido o expirado, limpiarlo
@@ -45,8 +52,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Login exitoso
             console.log('Login exitoso:', response);
             
-            // Redirigir a la página principal
-            window.location.href = 'home.html';
+            // Esperar un poco para asegurar que el usuario se actualizó
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            // Verificar el rol del usuario
+            const user = api.getUser();
+            const isAdmin = api.isAdmin();
+            console.log('[Auth] Usuario después de login:', user);
+            console.log('[Auth] Es admin:', isAdmin);
+            
+            // FORZAR REDIRECCIÓN DIRECTA sin depender de RouteGuard
+            const redirectUrl = isAdmin ? '/admin/' : '/home.html';
+            console.log('[Auth] Redirigiendo a:', redirectUrl);
+            window.location.href = redirectUrl;
             
         } catch (error) {
             console.error('Error en login:', error);

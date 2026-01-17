@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Verificar autenticación (fallback)
     if (!api.isAuthenticated()) {
-        window.location.href = 'index.html';
+        window.location.href = '/index.html';
         return;
     }
 
     if (!api.isAdmin()) {
         alert('No tienes permisos de administrador');
-        window.location.href = 'home.html';
+        window.location.href = '/home.html';
         return;
     }
 

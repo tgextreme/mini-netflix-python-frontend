@@ -125,7 +125,21 @@ class ApiClient {
         // El backend devuelve 'token' no 'access_token'
         if (data.token) {
             this.saveToken(data.token);
-            this.saveUser(data.user);
+            
+            // Guardar usuario inicial del login
+            if (data.user) {
+                this.saveUser(data.user);
+                console.log('[API] Usuario guardado desde login:', data.user);
+            }
+            
+            // Actualizar datos del usuario desde el servidor para asegurar que tenemos todos los campos
+            try {
+                const userData = await this.getMe();
+                this.saveUser(userData);
+                console.log('[API] Usuario actualizado desde /me:', userData);
+            } catch (error) {
+                console.warn('No se pudo actualizar datos del usuario:', error);
+            }
         }
         
         return data;
@@ -528,10 +542,108 @@ class ApiClient {
         });
     }
 
+    // ============ ADMIN - UPLOAD MEDIA ============
+    async uploadVideo(file, titleId = null, onProgress = null) {
+        const formData = new FormData();
+        formData.append('file', file);
+        if (titleId) {
+            formData.append('title_id', titleId);
+        }
+
+        return await this.uploadWithProgress('/admin/media/upload/video', formData, onProgress);
+    }
+
+    async uploadImage(file, imageType = 'poster', titleId = null, onProgress = null) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('image_type', imageType);
+        if (titleId) {
+            formData.append('title_id', titleId);
+        }
+
+        return await this.uploadWithProgress('/admin/media/upload/image', formData, onProgress);
+    }
+
+    async uploadWithProgress(endpoint, formData, onProgress = null) {
+        const url = `${this.baseUrl}${endpoint}`;
+        const token = this.getToken();
+
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+
+            // Eventos de progreso
+            if (onProgress) {
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        onProgress(percentComplete, e.loaded, e.total);
+                    }
+                });
+            }
+
+            // Evento de carga completada
+            xhr.addEventListener('load', () => {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        resolve(data);
+                    } catch (e) {
+                        reject(new Error('Error al parsear respuesta'));
+                    }
+                } else {
+                    try {
+                        const error = JSON.parse(xhr.responseText);
+                        reject({
+                            status: xhr.status,
+                            message: error.detail || error.message || 'Error en la petición',
+                            data: error
+                        });
+                    } catch (e) {
+                        reject({
+                            status: xhr.status,
+                            message: 'Error en la petición',
+                            data: null
+                        });
+                    }
+                }
+            });
+
+            // Evento de error
+            xhr.addEventListener('error', () => {
+                reject({
+                    status: 0,
+                    message: 'Error de conexión con el servidor',
+                    data: null
+                });
+            });
+
+            // Configurar y enviar
+            xhr.open('POST', url);
+            if (token) {
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+            }
+            xhr.send(formData);
+        });
+    }
+
+    async deleteMedia(filePath) {
+        return await this.request(`/admin/media/delete/${encodeURIComponent(filePath)}`, {
+            method: 'DELETE',
+        });
+    }
+
+    async getMediaStats() {
+        return await this.request('/admin/media/stats', {
+            method: 'GET',
+        });
+    }
+
     // ============ UTILIDADES ============
     isAdmin() {
         const user = this.getUser();
-        return user && (user.is_admin || user.role === 'admin');
+        const result = user && (user.is_admin || user.role === 'admin');
+        console.log('[API] isAdmin check:', { user, result });
+        return result;
     }
 }
 

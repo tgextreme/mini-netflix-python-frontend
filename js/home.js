@@ -1,14 +1,14 @@
 // home.js - Funcionalidad para la página principal
 
-let isRedirecting = false;
-
 document.addEventListener('DOMContentLoaded', async () => {
-    // Verificar autenticación
+    // Proteger ruta - requiere autenticación
+    if (window.RouteGuard && !window.RouteGuard.requireAuth()) {
+        return;
+    }
+    
+    // Verificar autenticación (fallback si route-guard no está disponible)
     if (!api.isAuthenticated()) {
-        if (!isRedirecting) {
-            isRedirecting = true;
-            window.location.href = 'index.html';
-        }
+        window.location.href = 'index.html';
         return;
     }
 
@@ -17,11 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         await api.getMe();
     } catch (error) {
         console.error('Token inválido:', error);
-        if (!isRedirecting) {
-            isRedirecting = true;
-            api.removeToken();
-            window.location.href = 'index.html';
-        }
+        api.removeToken();
+        window.location.href = 'index.html';
         return;
     }
 

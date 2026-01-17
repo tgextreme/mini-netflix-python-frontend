@@ -1,26 +1,27 @@
 // admin.js - Funcionalidad para el panel de administración
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Proteger ruta - requiere permisos de admin
-    if (window.RouteGuard) {
-        const hasAccess = await window.RouteGuard.requireAdmin();
-        if (!hasAccess) {
-            return;
-        }
-    }
+    console.log('[Dashboard] Iniciando verificación de permisos...');
+    console.log('[Dashboard] api.isAuthenticated():', api.isAuthenticated());
+    console.log('[Dashboard] api.isAdmin():', api.isAdmin());
+    console.log('[Dashboard] User:', api.getUser());
     
     // Verificar autenticación (fallback)
     if (!api.isAuthenticated()) {
-        window.location.href = 'index.html';
+        console.log('[Dashboard] Usuario no autenticado, redirigiendo a login');
+        window.location.href = '/index.html';
         return;
     }
 
     // Verificar si es admin (fallback)
     if (!api.isAdmin()) {
+        console.log('[Dashboard] Usuario no es admin, redirigiendo a home');
         alert('No tienes permisos de administrador');
-        window.location.href = 'home.html';
+        window.location.href = '/home.html';
         return;
     }
+    
+    console.log('[Dashboard] Acceso concedido, cargando dashboard...');
 
     const user = api.getUser();
     if (user && user.name) {

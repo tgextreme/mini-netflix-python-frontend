@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - RustFlix</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        pre {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 RustFlix Debug</h1>
+    
+    <h2>Estado Actual:</h2>
+    <pre id="status"></pre>
+    
+    <h2>Acciones:</h2>
+    <button onclick="checkAuth()">Verificar Autenticación</button>
+    <button onclick="clearStorage()">Limpiar localStorage</button>
+    <button onclick="testLogin()">Test Login Admin</button>
+    
+    <script src="js/api.js"></script>
+    <script>
+        function checkAuth() {
+            const status = document.getElementById('status');
+            const user = api.getUser();
+            const token = api.getToken();
+            const isAuth = api.isAuthenticated();
+            const isAdm = api.isAdmin();
+            
+            status.innerHTML = `
+TOKEN: ${token ? 'SÍ (longitud: ' + token.length + ')' : 'NO'}
+AUTENTICADO: ${isAuth}
+ES ADMIN: ${isAdm}
+
+USUARIO EN LOCALSTORAGE:
+${JSON.stringify(user, null, 2)}
+
+RAW localStorage.user:
+${localStorage.getItem('user')}
+            `;
+        }
+        
+        function clearStorage() {
+            localStorage.clear();
+            alert('localStorage limpiado');
+            checkAuth();
+        }
+        
+        async function testLogin() {
+            try {
+                const result = await api.login('admin@rustflix.com', 'admin123');
+                console.log('Login result:', result);
+                setTimeout(checkAuth, 200);
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error(error);
+            }
+        }
+        
+        // Auto-check al cargar
+        checkAuth();
+    </script>
+</body>
+</html>
