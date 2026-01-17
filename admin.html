@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RustFlix - Panel de Administración</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="nav-logo">🎬 RustFlix Admin</h1>
+                <ul class="nav-menu">
+                    <li><a href="admin.html" class="active">Dashboard</a></li>
+                    <li><a href="admin-content.html">Contenido</a></li>
+                    <li><a href="admin-users.html">Usuarios</a></li>
+                    <li><a href="home.html">Ver Sitio</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user-name" id="userName">Admin</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section class="content-section" style="margin-top: 40px;">
+            <h2 class="section-title">📊 Estadísticas del Sistema</h2>
+            
+            <div id="loadingStats" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="statsGrid" class="stats-grid">
+                <!-- Se cargará dinámicamente -->
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">📈 Contenido Más Visto</h2>
+            
+            <div id="loadingViews" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="topContentList" class="admin-list">
+                <!-- Se cargará dinámicamente -->
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">👥 Usuarios Recientes</h2>
+            
+            <div id="loadingUsers" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="recentUsersList" class="admin-list">
+                <!-- Se cargará dinámicamente -->
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RustFlix - Panel de Administración</p>
+        </div>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

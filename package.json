@@ -1,0 +1,71 @@
+{
+  "name": "rustflix-frontend",
+  "version": "2.1.0",
+  "description": "Frontend completo para Mini-Netflix con PWA, i18n, seguridad mejorada, y todas las funcionalidades modernas",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "serve": "npx http-server -p 3000 -c-1",
+    "dev": "npx live-server --port=3000 --no-browser",
+    "build": "./build.sh",
+    "test": "echo \"See TESTING.md for testing guide\" && exit 0"
+  },
+  "keywords": [
+    "netflix",
+    "streaming",
+    "frontend",
+    "javascript",
+    "html5",
+    "css3",
+    "pwa",
+    "i18n",
+    "series",
+    "episodes",
+    "subtitles",
+    "admin-panel",
+    "progressive-web-app",
+    "internationalization"
+  ],
+  "features": [
+    "Series and Episodes Management",
+    "Multi-language Subtitles",
+    "Password Recovery System",
+    "Admin Dashboard with Statistics",
+    "Content Management (CRUD)",
+    "User Management",
+    "Responsive Design",
+    "JWT Authentication",
+    "Progressive Web App (PWA)",
+    "Internationalization (ES, EN, PT)",
+    "Security & Error Handling",
+    "Analytics Integration",
+    "Offline Support",
+    "Service Worker Caching"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "pages": {
+    "public": [
+      "index.html - Login page",
+      "register.html - User registration",
+      "forgot-password.html - Password recovery request",
+      "reset-password.html - Password reset confirmation"
+    ],
+    "authenticated": [
+      "home.html - Main dashboard",
+      "browse.html - Content catalog",
+      "series.html - Series details with seasons/episodes",
+      "watch.html - Video player with subtitles",
+      "profile.html - User profile and My List"
+    ],
+    "admin": [
+      "admin.html - Admin dashboard with stats",
+      "admin-content.html - Content management (CRUD)"
+    ]
+  },
+  "apiEndpoints": {
+    "base": "http://localhost:8000",
+    "required": "See BACKEND_REQUIREMENTS.md for full API specification"
+  }
+}

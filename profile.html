@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tu perfil y Mi Lista en RustFlix">
+    <meta name="theme-color" content="#e50914">
+    <title>RustFlix - Mi Perfil</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icon-192x192.png">
+    
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="nav-logo">🎬 RustFlix</h1>
+                <ul class="nav-menu">
+                    <li><a href="home.html">Inicio</a></li>
+                    <li><a href="browse.html">Explorar</a></li>
+                    <li><a href="profile.html" class="active">Mi Lista</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user-name" id="userName">Usuario</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="profile-container">
+        <!-- Perfil del Usuario -->
+        <div class="profile-header">
+            <div class="profile-avatar" id="userAvatar">👤</div>
+            <div class="profile-info">
+                <h1 id="profileName">Usuario</h1>
+                <p id="profileEmail">email@ejemplo.com</p>
+            </div>
+        </div>
+
+        <!-- Mi Lista -->
+        <div class="profile-section">
+            <h2>📌 Mi Lista</h2>
+            <div id="loadingMyList" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div id="myListGrid" class="content-grid">
+                <!-- Se cargará dinámicamente -->
+            </div>
+            <div id="emptyMyList" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <p style="font-size: 1.2rem;">Tu lista está vacía</p>
+                <p>Añade películas y series para verlas más tarde</p>
+                <a href="browse.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block; text-decoration: none;">
+                    Explorar Contenido
+                </a>
+            </div>
+        </div>
+
+        <!-- Continuar Viendo -->
+        <div class="profile-section">
+            <h2>⏯️ Continuar Viendo</h2>
+            <div id="loadingContinue" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div id="continueWatchingGrid" class="content-grid">
+                <!-- Se cargará dinámicamente -->
+            </div>
+            <div id="emptyContinue" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <p style="font-size: 1.2rem;">No hay contenido por continuar</p>
+                <p>Empieza a ver algo nuevo</p>
+            </div>
+        </div>
+
+        <!-- Historial Completo -->
+        <div class="profile-section">
+            <h2>📜 Historial de Visualización</h2>
+            <div id="loadingHistory" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div id="historyList" style="max-height: 400px; overflow-y: auto;">
+                <!-- Se cargará dinámicamente -->
+            </div>
+            <div id="emptyHistory" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <p>No hay historial de visualización</p>
+            </div>
+        </div>
+
+        <!-- Gestión de Perfiles -->
+        <div class="profile-section">
+            <h2>👥 Mis Perfiles</h2>
+            <div id="loadingProfiles" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div id="profilesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                <!-- Se cargará dinámicamente -->
+            </div>
+            <button id="addProfileBtn" class="btn btn-secondary">
+                ➕ Crear Nuevo Perfil
+            </button>
+        </div>
+    </main>
+
+    <!-- Modal para detalles del contenido -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header" id="modalHeader"></div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="playBtn">
+                        ▶️ Reproducir
+                    </button>
+                    <button class="btn btn-secondary" id="removeFromListBtn">
+                        ✕ Quitar de Mi Lista
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para crear perfil -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" id="profileModalClose">✕</button>
+            <div class="modal-body">
+                <h2 class="modal-title">Crear Nuevo Perfil</h2>
+                <form id="createProfileForm">
+                    <div class="form-group">
+                        <label for="profileNameInput">Nombre del Perfil</label>
+                        <input type="text" id="profileNameInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="isKidsCheckbox">
+                            <span>Perfil para niños</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Crear Perfil
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RustFlix - Mini Netflix Clone</p>
+            <p>Powered by FastAPI + Python + PostgreSQL</p>
+        </div>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

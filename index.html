@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inicia sesión en RustFlix - Tu plataforma de streaming">
+    <meta name="theme-color" content="#e50914">
+    <title>RustFlix - Iniciar Sesión</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/assets/icon-192x192.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-box">
+            <div class="logo">
+                <h1>🎬 RustFlix</h1>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <h2>Iniciar Sesión</h2>
+                
+                <div id="errorMessage" class="error-message"></div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="tu@email.com"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="••••••••"
+                        required
+                        minlength="6"
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <span class="btn-text">Iniciar Sesión</span>
+                    <span class="btn-loading">Cargando...</span>
+                </button>
+                
+                <div class="auth-footer">
+                    <p><a href="forgot-password.html">¿Olvidaste tu contraseña?</a></p>
+                    <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Core Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/pwa-helper.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

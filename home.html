@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explora películas y series en RustFlix">
+    <meta name="theme-color" content="#e50914">
+    <title>RustFlix - Inicio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icon-192x192.png">
+    
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="nav-logo">🎬 RustFlix</h1>
+                <ul class="nav-menu">
+                    <li><a href="home.html" class="active">Inicio</a></li>
+                    <li><a href="browse.html">Explorar</a></li>
+                    <li><a href="profile.html">Mi Lista</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user-name" id="userName">Usuario</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <!-- Hero destacado -->
+        <section class="hero" id="heroSection">
+            <div class="hero-content">
+                <h1 class="hero-title" id="heroTitle">Bienvenido a RustFlix</h1>
+                <p class="hero-description" id="heroDescription">
+                    Disfruta de las mejores películas y series en streaming
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" id="heroPlayBtn">
+                        ▶️ Reproducir
+                    </button>
+                    <button class="btn btn-secondary btn-large" id="heroInfoBtn">
+                        ℹ️ Más información
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contenido en tendencia -->
+        <section class="content-section">
+            <h2 class="section-title">🔥 Tendencias</h2>
+            <div id="loadingTrending" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div class="content-grid" id="trendingContent">
+                <!-- Los contenidos se cargarán dinámicamente -->
+            </div>
+        </section>
+        
+        <!-- Continuar viendo -->
+        <section class="content-section">
+            <h2 class="section-title">⏯️ Continuar Viendo</h2>
+            <div id="loadingContinue" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div class="content-grid" id="continueWatching">
+                <!-- Los contenidos se cargarán dinámicamente -->
+            </div>
+            <div id="emptyContinue" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <p>No hay contenido por continuar</p>
+            </div>
+        </section>
+
+        <!-- Recomendaciones -->
+        <section class="content-section">
+            <h2 class="section-title">✨ Recomendado para ti</h2>
+            <div id="loadingRecommended" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div class="content-grid" id="recommendedContent">
+                <!-- Los contenidos se cargarán dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Mi Lista -->
+        <section class="content-section">
+            <h2 class="section-title">📌 Mi Lista</h2>
+            <div id="loadingMyList" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+            <div class="content-grid" id="myListContent">
+                <!-- Los contenidos se cargarán dinámicamente -->
+            </div>
+            <div id="emptyMyList" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <p>Tu lista está vacía</p>
+                <a href="browse.html" class="btn btn-secondary" style="margin-top: 15px; display: inline-block; text-decoration: none;">
+                    Explorar Contenido
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para detalles del contenido -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header" id="modalHeader"></div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="playBtn">
+                        ▶️ Reproducir
+                    </button>
+                    <button class="btn btn-secondary" id="addToListBtn">
+                        ➕ Mi Lista
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RustFlix - Mini Netflix Clone</p>
+            <p>Powered by FastAPI + Python + PostgreSQL</p>
+        </div>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

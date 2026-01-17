@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RustFlix - Detalles de Serie</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="nav-logo">🎬 RustFlix</h1>
+                <ul class="nav-menu">
+                    <li><a href="home.html">Inicio</a></li>
+                    <li><a href="browse.html">Explorar</a></li>
+                    <li><a href="profile.html">Mi Lista</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user-name" id="userName">Usuario</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <!-- Loading -->
+        <div id="loadingSpinner" class="loading-container">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Error -->
+        <div id="errorMessage" style="display: none; text-align: center; padding: 100px 20px;">
+            <h2 style="color: var(--error-color); font-size: 2rem; margin-bottom: 20px;">
+                Error al cargar la serie
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                No se pudo cargar el contenido solicitado
+            </p>
+            <a href="home.html" class="btn btn-primary" style="display: inline-block; text-decoration: none;">
+                Volver al Inicio
+            </a>
+        </div>
+
+        <!-- Contenido de la Serie -->
+        <div id="seriesContent" style="display: none;">
+            <!-- Hero Section -->
+            <section class="series-hero" id="seriesHero">
+                <div class="hero-content">
+                    <h1 class="hero-title" id="seriesTitle">Título de la Serie</h1>
+                    <div class="hero-meta" id="seriesMeta"></div>
+                    <p class="hero-description" id="seriesDescription"></p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" id="playFirstBtn">
+                            ▶️ Reproducir T1:E1
+                        </button>
+                        <button class="btn btn-secondary btn-large" id="addToListBtn">
+                            ➕ Mi Lista
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Selector de Temporadas -->
+            <section class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="section-title">Episodios</h2>
+                    <div class="season-selector">
+                        <label for="seasonSelect" style="margin-right: 10px; color: var(--text-secondary);">Temporada:</label>
+                        <select id="seasonSelect" class="season-select">
+                            <!-- Se cargará dinámicamente -->
+                        </select>
+                    </div>
+                </div>
+
+                <div id="loadingEpisodes" class="loading-container" style="display: none;">
+                    <div class="spinner"></div>
+                </div>
+
+                <div id="episodesList" class="episodes-list">
+                    <!-- Se cargará dinámicamente -->
+                </div>
+
+                <div id="noEpisodes" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">
+                    <p>No hay episodios disponibles para esta temporada</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RustFlix - Mini Netflix Clone</p>
+            <p>Powered by FastAPI + Python + PostgreSQL</p>
+        </div>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/series.js"></script>
+</body>
+</html>

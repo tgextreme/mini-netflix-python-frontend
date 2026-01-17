@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RustFlix - Gestión de Contenido</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <h1 class="nav-logo">🎬 RustFlix Admin</h1>
+                <ul class="nav-menu">
+                    <li><a href="admin.html">Dashboard</a></li>
+                    <li><a href="admin-content.html" class="active">Contenido</a></li>
+                    <li><a href="admin-users.html">Usuarios</a></li>
+                    <li><a href="home.html">Ver Sitio</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="user-name" id="userName">Admin</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section class="content-section" style="margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 class="section-title">🎬 Gestión de Contenido</h2>
+                <button id="createTitleBtn" class="btn btn-primary">
+                    ➕ Agregar Título
+                </button>
+            </div>
+            
+            <div class="browse-filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="movie">Películas</button>
+                <button class="filter-btn" data-filter="series">Series</button>
+                <input type="text" 
+                       id="searchInput" 
+                       class="search-box" 
+                       placeholder="Buscar contenido..." />
+            </div>
+
+            <div id="loadingContent" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="contentTable" class="admin-table">
+                <!-- Se cargará dinámicamente -->
+            </div>
+
+            <div id="noContent" style="display: none; text-align: center; padding: 60px 20px;">
+                <h2 style="color: var(--text-secondary); font-size: 1.5rem;">
+                    No hay contenido disponible
+                </h2>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para crear/editar título -->
+    <div id="titleModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle">Agregar Título</h2>
+                <form id="titleForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="titleInput">Título *</label>
+                        <input type="text" id="titleInput" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="typeSelect">Tipo *</label>
+                        <select id="typeSelect" required>
+                            <option value="movie">Película</option>
+                            <option value="series">Serie</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descriptionInput">Descripción</label>
+                        <textarea id="descriptionInput" rows="4"></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="genreInput">Género</label>
+                            <input type="text" id="genreInput" placeholder="Acción, Drama, etc.">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="releaseYearInput">Año de Lanzamiento</label>
+                            <input type="number" id="releaseYearInput" min="1900" max="2030">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="durationInput">Duración (minutos)</label>
+                            <input type="number" id="durationInput" min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ratingInput">Clasificación</label>
+                            <select id="ratingInput">
+                                <option value="">Sin clasificar</option>
+                                <option value="G">G - Todo público</option>
+                                <option value="PG">PG - Guía parental</option>
+                                <option value="PG-13">PG-13 - Mayores de 13</option>
+                                <option value="R">R - Mayores de 17</option>
+                                <option value="NC-17">NC-17 - Adultos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="videoUrlInput">URL del Video</label>
+                        <input type="url" id="videoUrlInput" placeholder="https://...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thumbnailUrlInput">URL de Miniatura</label>
+                        <input type="url" id="thumbnailUrlInput" placeholder="https://...">
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">
+                            Guardar
+                        </button>
+                        <button type="button" id="cancelBtn" class="btn btn-secondary" style="flex: 1;">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RustFlix - Panel de Administración</p>
+        </div>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/admin-content.js"></script>
+</body>
+</html>

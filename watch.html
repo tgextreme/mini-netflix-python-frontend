@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reproductor de video RustFlix">
+    <meta name="theme-color" content="#141414">
+    <title>RustFlix - Reproducir</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icon-192x192.png">
+    
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body style="background: #000;">
+    <nav class="navbar" style="background: rgba(0,0,0,0.95);">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="home.html" style="text-decoration: none;">
+                    <h1 class="nav-logo">🎬 RustFlix</h1>
+                </a>
+            </div>
+            <div class="nav-right">
+                <button id="backBtn" class="btn btn-secondary">← Volver</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main style="padding: 20px; max-width: 1400px; margin: 0 auto;">
+        <div id="loadingSpinner" class="loading-container">
+            <div class="spinner"></div>
+        </div>
+        
+        <div id="videoSection" style="display: none;">
+            <div class="video-container">
+                <video id="videoPlayer" class="video-player" controls>
+                    <source id="videoSource" src="" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: var(--secondary-bg); border-radius: var(--border-radius);">
+                <h1 id="titleName" style="font-size: 2rem; margin-bottom: 15px;"></h1>
+                <div id="titleMeta" style="color: var(--text-secondary); margin-bottom: 20px;"></div>
+                <p id="titleDescription" style="line-height: 1.6; color: var(--text-secondary);"></p>
+                
+                <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button id="addToListBtn" class="btn btn-secondary">
+                        ➕ Añadir a Mi Lista
+                    </button>
+                    <button id="rateBtn" class="btn btn-secondary">
+                        ⭐ Calificar
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="errorMessage" style="display: none; text-align: center; padding: 100px 20px;">
+            <h2 style="color: var(--error-color); font-size: 2rem; margin-bottom: 20px;">
+                Error al cargar el video
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                No se pudo cargar el contenido solicitado
+            </p>
+            <a href="home.html" class="btn btn-primary" style="display: inline-block; text-decoration: none;">
+                Volver al Inicio
+            </a>
+        </div>
+    </main>
+    
+    <!-- Modal para calificar -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" id="ratingModalClose">✕</button>
+            <div class="modal-body">
+                <h2 class="modal-title">Calificar</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                    ¿Qué te pareció este contenido?
+                </p>
+                <div id="ratingStars" style="display: flex; gap: 10px; justify-content: center; font-size: 3rem; margin-bottom: 30px;">
+                    <span class="rating-star" data-rating="1">☆</span>
+                    <span class="rating-star" data-rating="2">☆</span>
+                    <span class="rating-star" data-rating="3">☆</span>
+                    <span class="rating-star" data-rating="4">☆</span>
+                    <span class="rating-star" data-rating="5">☆</span>
+                </div>
+                <button id="submitRating" class="btn btn-primary" style="width: 100%;">
+                    Enviar Calificación
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/api.js"></script>
+    <script src="js/watch.js"></script>
+</body>
+</html>
