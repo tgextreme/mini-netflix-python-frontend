@@ -508,7 +508,7 @@ class ApiClient {
         });
     }
 
-    async getUser(userId) {
+    async getUserById(userId) {
         return await this.request(`/api/admin/users/${userId}`, {
             method: 'GET',
         });

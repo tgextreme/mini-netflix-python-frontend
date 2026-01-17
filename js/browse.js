@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
     searchWrapper.appendChild(suggestionsContainer);
     
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', async (e) => {
         clearTimeout(searchTimeout);
         const query = e.target.value.trim();
         
